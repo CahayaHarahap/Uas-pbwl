@@ -20,28 +20,6 @@
                     <tr>
                         <td>{{ $item->email }}</td>
                         <td>{{ $item->name }}</td>
-                        <td>
-                            @if ($item->role == 0) 
-                                <span class="badge bg-primary">
-                                    Admin
-                                </span>
-                            @else
-                                <span class="badge bg-secondary">
-                                    Pelanggan
-                                </span>
-                            @endif
-                        </td>
-                        <td>
-                            @if ($item->user_aktif == 0) 
-                                <span class="badge bg-secondary">
-                                    Tidak Aktif
-                                </span>
-                            @else
-                                <span class="badge bg-secondary">
-                                    Aktif
-                                </span>
-                            @endif
-                        </td>
                         <td style="width: 25%">
                             <a href="{{ route('user.edit', $item->id) }}">
                                 <button class="btn btn-sm btn-warning">Edit</button>

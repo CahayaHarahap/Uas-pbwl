@@ -3,21 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Borrower;
+use App\Models\{Expenditure, Category};
 
-class BorrowerController extends Controller
+class ExpenditureController extends Controller
 {
- /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $borrower = Borrower::orderBy('id', 'desc')->get();
+        $exependiture = Expenditure::get();
 
-        return view('apps.borrower.index')->with('borrower', $borrower);
-        
+        return view('apps.expenditure.index')->with('expenditure', $exependiture);
     }
 
     /**
@@ -27,7 +26,8 @@ class BorrowerController extends Controller
      */
     public function create()
     {
-        return view('apps.borrower.create');
+        $category = Category::get();
+        return view('apps.expenditure.create')->with('category', $category);
     }
 
     /**
@@ -38,10 +38,12 @@ class BorrowerController extends Controller
      */
     public function insert(Request $request)
     {
-        $borrower = $request->all();
+        $data = $request->all();
 
-        Borrower::create($borrower);
-        return redirect()->route('borrower');
+        $data['user_id'] = auth()->user()->id;
+        Expenditure::create($data);
+
+        return redirect()->route('expenditure');
     }
 
     /**
@@ -50,9 +52,11 @@ class BorrowerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(borrower $borrower)
+    public function edit(Expenditure $expenditure)
     {
-        return view('apps.borrower.edit')->with('borrower', $borrower);
+        $category = Category::get();
+        return view('apps.expenditure.edit')->with('expenditure', $expenditure)
+                                            ->with('category', $category);
     }
 
     /**
@@ -64,10 +68,12 @@ class BorrowerController extends Controller
      */
     public function update(Request $request)
     {
-        $borrower = Borrower::findOrFail($request->id);
+        $exependiture = Expenditure::findOrFail($request->id);
+        $data = $request->all();
+        $data['user_id'] = auth()->user()->id;
 
-        $borrower->update($request->all());
-        return redirect()->route('borrower');
+        $exependiture->update($request->all());
+        return redirect()->route('expenditure');
     }
 
     /**
@@ -78,9 +84,9 @@ class BorrowerController extends Controller
      */
     public function delete(Request $request)
     {
-        $borrower = Borrower::findOrFail($request->id);
-        $borrower->delete();
+        $exependiture = Expenditure::findOrFail($request->id);
 
+        $exependiture->delete();
         return redirect()->back();
     }
 }

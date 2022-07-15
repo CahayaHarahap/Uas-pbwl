@@ -25,7 +25,10 @@
                     <a class="nav-link" href="{{ route('income') }}">Pemasukkan</a>
                 </li>
                 <li class="sidebar-item">
-                <a class="nav-link" href="{{ route('expenditure') }}">Pengeluaran</a>
+                    <a class="nav-link" href="{{ route('expenditure') }}">Pengeluaran</a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="nav-link" href="{{ route('user') }}">Pengguna</a>
                 </li>
                 <li class="sidebar-item">
                     <form method="POST" action="{{ route('logout') }}">

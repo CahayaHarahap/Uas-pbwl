@@ -3,21 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
+use App\Models\user;
 use Illuminate\Support\Facades\Hash;
-class PenggunaController extends Controller
+
+class userController extends Controller
 {
-     /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $user = User::orderBy('id', 'desc')->get();
+        $user = User::get();
 
-        return view('apps.pengguna.index')->with('user', $user);
-        
+        return view('apps.user.index')->with('user', $user);
     }
 
     /**
@@ -26,8 +26,8 @@ class PenggunaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        return view('apps.pengguna.create');
+    {   
+        return view('apps.user.create');
     }
 
     /**
@@ -39,10 +39,11 @@ class PenggunaController extends Controller
     public function insert(Request $request)
     {
         $user = $request->all();
-
-        $user['password'] = Hash::make($request->password);
         User::create($user);
-        return redirect()->route('pengguna');
+
+        $user['password'] = Hash::make('password');
+
+        return redirect()->route('user');
     }
 
     /**
@@ -51,9 +52,9 @@ class PenggunaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
-    {   
-        return view('apps.pengguna.edit')->with('user', $user);
+    public function edit(user $user)
+    {
+        return view('apps.user.edit')->with('user', $user);
     }
 
     /**
@@ -66,9 +67,9 @@ class PenggunaController extends Controller
     public function update(Request $request)
     {
         $user = User::findOrFail($request->id);
-
-        $user->update($request->all());
-        return redirect()->route('pengguna');
+        $data = $request->all();
+        $user->update($data);
+        return redirect()->route('user');
     }
 
     /**

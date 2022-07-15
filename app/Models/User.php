@@ -19,12 +19,12 @@ class User extends Authenticatable
      */
     protected $guarded = ['id'];
 
-    public function bookLoan(){
-        return $this->belongsTo(BookLoan::class);
+    public function expenditure(){
+        return $this->hasMany(Expenditure::class);
     }
 
-    public function bookReturn(){
-        return $this->belongsTo(BookReturn::class);
+    public function income(){
+        return $this->hasMany(Income::class);
     }
 
     /**

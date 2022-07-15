@@ -3,21 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{Book, Borrower, BookLoan};
+use App\Models\{Income, Category};
 
-class BookLoanController extends Controller
+class IncomeController extends Controller
 {
- /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $book_loan = BookLoan::orderBy('id', 'desc')->get();
+        $income = Income::get();
 
-        return view('apps.book_loan.index')->with('book_loan', $book_loan);
-        
+        return view('apps.income.index')->with('income', $income);
     }
 
     /**
@@ -27,10 +26,8 @@ class BookLoanController extends Controller
      */
     public function create()
     {
-        $book = Book::get();
-        $borrower = Borrower::get();
-        return view('apps.book_loan.create')->with('book', $book)
-                                       ->with('borrower', $borrower);
+        $category = Category::get();
+        return view('apps.income.create')->with('category', $category);
     }
 
     /**
@@ -41,10 +38,12 @@ class BookLoanController extends Controller
      */
     public function insert(Request $request)
     {
-        $book_loan = $request->all();
-        $book_loan['user_id'] = auth()->user()->id;
-        BookLoan::create($book_loan);
-        return redirect()->route('book_loan');
+        $data = $request->all();
+
+        $data['user_id'] = auth()->user()->id;
+        Income::create($data);
+
+        return redirect()->route('income');
     }
 
     /**
@@ -53,13 +52,11 @@ class BookLoanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(BookLoan $book_loan)
+    public function edit(Income $income)
     {
-        $book = Book::get();
-        $borrower = Borrower::get();
-        return view('apps.book_loan.edit')->with('book', $book)
-                                          ->with('book_loan', $book_loan)
-                                          ->with('borrower', $borrower);
+        $category = Category::get();
+        return view('apps.income.edit')->with('income', $income)
+                                       ->with('category', $category);
     }
 
     /**
@@ -71,12 +68,12 @@ class BookLoanController extends Controller
      */
     public function update(Request $request)
     {
-        $book_loan = BookLoan::findOrFail($request->id);
+        $income = Income::findOrFail($request->id);
         $data = $request->all();
         $data['user_id'] = auth()->user()->id;
 
-        $book_loan->update($request->all());
-        return redirect()->route('book_loan');
+        $income->update($request->all());
+        return redirect()->route('income');
     }
 
     /**
@@ -87,9 +84,9 @@ class BookLoanController extends Controller
      */
     public function delete(Request $request)
     {
-        $book_loan = BookLoan::findOrFail($request->id);
-        $book_loan->delete();
+        $income = Income::findOrFail($request->id);
 
+        $income->delete();
         return redirect()->back();
     }
 }

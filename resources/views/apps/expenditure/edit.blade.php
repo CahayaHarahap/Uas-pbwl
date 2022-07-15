@@ -14,7 +14,7 @@
                         <option value="">-Silahkan Pilih-</option>
                         @foreach ($category as $item)
                             <option value="{{ $item->id }}" 
-                                @if ($item->id == $income->category->id)
+                                @if ($item->id == $expenditure->category->id)
                                     selected
                                 @endif>{{ $item->name }}</option>
                         @endforeach
@@ -22,11 +22,11 @@
                 </div>
                 <div class="form-group mt-2 ">
                     <label for="">Nama</label>
-                    <input type="text" class="form-control" name="name" value="{{ $income->name }}">
+                    <input type="text" class="form-control" name="name" value="{{ $expenditure->name }}">
                 </div>
                 <div class="form-group mt-2 ">
                     <label for="">Total</label>
-                    <input type="number" class="form-control" name="total" value="{{ $income->total }}">
+                    <input type="number" class="form-control" name="total" value="{{ $expenditure->total }}">
                 </div>
                 <div class="d-flex justify-content-end mt-4">
                     <button class="btn btn-sm btn-success" name="simpan">Simpan</button>

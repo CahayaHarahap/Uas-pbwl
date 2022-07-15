@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('content')
-<div class="container" style="padding-top: 40px">
+<div class="container" style="padding-top: 40px; padding-bottom:40px; min-height: 600px">
     <div class="card" style="width: 600px">
         <div class="card-body">
             <p class="card-text">
@@ -14,7 +14,7 @@
                     </div>
                     <div class="form-group mt-2 ">
                         <label for="">Nama</label>
-                        <input type="text" class="form-control" name="nama">
+                        <input type="text" class="form-control" name="name">
                     </div>
                   
                     <div class="form-group mt-2 ">

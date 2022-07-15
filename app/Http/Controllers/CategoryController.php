@@ -3,21 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{BookReturn, BookLoan};
+use App\Models\Category;
 
-class BookReturnController extends Controller
+class CategoryController extends Controller
 {
- /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $book_return = BookReturn::orderBy('id', 'desc')->get();
+        $category = Category::get();
 
-        return view('apps.book_return.index')->with('book_return', $book_return);
-        
+        return view('apps.category.index')->with('category', $category);
     }
 
     /**
@@ -27,8 +26,7 @@ class BookReturnController extends Controller
      */
     public function create()
     {
-        $book_loan = BookLoan::get();
-        return view('apps.book_return.create')->with('book_loan', $book_loan);
+        return view('apps.category.create');
     }
 
     /**
@@ -39,11 +37,9 @@ class BookReturnController extends Controller
      */
     public function insert(Request $request)
     {
-        $book_return = $request->all();
-        $book_return['user_id'] = auth()->user()->id;
+        Category::create($request->all());
 
-        BookReturn::create($book_return);
-        return redirect()->route('book_return');
+        return redirect()->route('category');
     }
 
     /**
@@ -52,11 +48,9 @@ class BookReturnController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(BookReturn $book_return)
+    public function edit(Category $category)
     {
-        $book_loan = BookLoan::get();
-        return view('apps.book_return.edit')->with('book_loan', $book_loan)
-                                            ->with('book_return', $book_return);
+        return view('apps.category.edit')->with('category', $category);
     }
 
     /**
@@ -68,12 +62,10 @@ class BookReturnController extends Controller
      */
     public function update(Request $request)
     {
-        $book_return = BookReturn::findOrFail($request->id);
-        $data = $request->all();
-        $data['user_id'] = auth()->user()->id;
+        $category = Category::findOrFail($request->id);
 
-        $book_return->update($data);
-        return redirect()->route('book_return');
+        $category->update($request->all());
+        return redirect()->route('category');
     }
 
     /**
@@ -84,8 +76,8 @@ class BookReturnController extends Controller
      */
     public function delete(Request $request)
     {
-        $book_return = BookReturn::findOrFail($request->id);
-        $book_return->delete();
+        $category = Category::findOrFail($request->id);
+        $category->delete();
 
         return redirect()->back();
     }
